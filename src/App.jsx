@@ -1,52 +1,40 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import { invoke } from "@tauri-apps/api/tauri";
-import "./App.css";
+import React from "react";
+import Table from "./components/Table";
+import DataTable from "./components/DataTable";
+import NewData from "./components/NewData";
 
 function App() {
-  const [greetMsg, setGreetMsg] = useState("");
-  const [name, setName] = useState("");
+  const data = [
+    { disease: "John", diseaseCount: 25, city: "New York" },
+    { disease: "Jane", diseaseCount: 30, city: "San Francisco" },
+    { disease: "Bob", diseaseCount: 35, city: "Seattle" },
+  ];
 
-  async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-    setGreetMsg(await invoke("greet", { name }));
-  }
+  const columns = [
+    { Header: "Disease", accessor: "disease" },
+    { Header: "1", accessor: "diseaseCount" },
+    { Header: "2", accessor: "city" },
+  ];
 
+  const customStyles = {
+    cells: {
+      padding: "1cm",
+    },
+    header: {
+      fontWeight: "bold",
+    },
+    table: {
+      border: "1px solid black",
+      borderCollapse: "collapse",
+    },
+    row: {
+      borderBottom: "1px solid black",
+    },
+  };
   return (
-    <div className="container">
-      <h1>Welcome to Tauri!</h1>
-
-      <div className="row">
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo vite" alt="Vite logo" />
-        </a>
-        <a href="https://tauri.app" target="_blank">
-          <img src="/tauri.svg" className="logo tauri" alt="Tauri logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-
-      <p>Click on the Tauri, Vite, and React logos to learn more.</p>
-
-      <div className="row">
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            greet();
-          }}
-        >
-          <input
-            id="greet-input"
-            onChange={(e) => setName(e.currentTarget.value)}
-            placeholder="Enter a name..."
-          />
-          <button type="submit">Greet</button>
-        </form>
-      </div>
-
-      <p>{greetMsg}</p>
+    <div>
+      <h1>My Table</h1>
+      <DataTable customStyles={customStyles} />
     </div>
   );
 }
