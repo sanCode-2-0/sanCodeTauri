@@ -7,13 +7,16 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "start": "concurrently \"cd express && pm2 start express-app.js --watch\" \"tauri dev\" "
   },
   "dependencies": {
     "@tauri-apps/api": "^1.3.0",
+    "concurrently": "^8.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-table": "^7.8.0"
+    "react-table": "^7.8.0",
+    "sqlite3": "^5.1.6"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.3.0",
