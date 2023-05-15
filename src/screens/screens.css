@@ -1,0 +1,9 @@
+:root {
+  --blue: #06a3da;
+}
+hr {
+  width: 90%;
+  height: 2.5px;
+  background-color: var(--blue);
+  border: 0;
+}

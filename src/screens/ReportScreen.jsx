@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-function DataTable() {
+
+const ReportScreen = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -35,6 +36,6 @@ function DataTable() {
       </tbody>
     </table>
   );
-}
+};
 
-export default DataTable;
+export default ReportScreen;

@@ -1,7 +1,12 @@
 import React from "react";
+
+// COMPONENTS
 import Table from "./components/Table";
-import DataTable from "./components/ReportTable";
 import NewData from "./components/NewData";
+
+// SCREENS
+import HomeScreen from "./screens/HomeScreen";
+import ReportScreen from "./screens/ReportScreen";
 
 // Report table custom styles
 const customStyles = {
@@ -23,8 +28,10 @@ const customStyles = {
 function App() {
   return (
     <div>
+      {/* HOME SCREEN */}
+      <HomeScreen />
       {/* To activate the Report Table, uncomment this */}
-      {/* <DataTable customStyles={customStyles} /> */}
+      {/* <ReportScreen customStyles={customStyles} /> */}
     </div>
   );
 }
