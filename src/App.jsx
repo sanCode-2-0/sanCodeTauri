@@ -27,7 +27,7 @@ const customStyles = {
 
 function App() {
   return (
-    <div>
+    <div className="light-grey">
       {/* HOME SCREEN */}
       <HomeScreen />
       {/* To activate the Report Table, uncomment this */}
