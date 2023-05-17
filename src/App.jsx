@@ -1,5 +1,5 @@
 import React from "react";
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 // COMPONENTS
 import Table from "./components/Table";
 import NewData from "./components/NewData";
@@ -11,36 +11,50 @@ import ReportScreen from "./screens/ReportScreen";
 
 // Report table custom styles
 const customStyles = {
-    cells: {
-        padding: "1cm",
-    },
-    header: {
-        fontWeight: "bold",
-    },
-    table: {
-        border: "1px solid black",
-        borderCollapse: "collapse",
-    },
-    row: {
-        borderBottom: "1px solid black",
-    },
+  cells: {
+    padding: "1cm",
+  },
+  header: {
+    fontWeight: "bold",
+  },
+  table: {
+    border: "1px solid black",
+    borderCollapse: "collapse",
+  },
+  row: {
+    borderBottom: "1px solid black",
+  },
 };
 
 function App() {
-    return (
-        <div className="light-grey">
-            {/*Add routing using Navigator Later*/}
+  return (
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/">
+            <Route index element={<HomeScreen />} />
+            <Route path="report-screen" element={<ReportScreen />} />
+            <Route
+              path="enter-admission-number-screen"
+              element={<EnterAdmissionNumberScreen />}
+            />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+      {/* <div className="light-grey">
+        {/*Add routing using Navigator Later*/}
 
-            {/* HOME SCREEN */}
-            {/*<HomeScreen />*/}
+      {/* HOME SCREEN */}
+      {/*<HomeScreen />*/}
 
-            {/*STUDENT SECTION*/}
-            <EnterAdmissionNumberScreen />
+      {/*STUDENT SECTION*/}
+      {/* <EnterAdmissionNumberScreen /> */}
 
-            {/* To activate the Report Table, uncomment this */}
-            {/* <ReportScreen customStyles={customStyles} /> */}
-        </div>
-    );
+      {/* To activate the Report Table, uncomment this */}
+      {/* <ReportScreen customStyles={customStyles} /> */}
+      {/* </div>  */}
+    </>
+  );
 }
 
 export default App;

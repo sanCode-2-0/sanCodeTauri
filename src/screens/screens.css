@@ -34,8 +34,13 @@ button {
   margin: 2px;
 }
 
-input{
-    background-color: white;
-    padding: 5px;
-    margin: 5px;
+input {
+  background-color: white;
+  padding: 5px;
+  margin: 5px;
+}
+
+.modal {
+  top: auto;
+  bottom: 0;
 }
