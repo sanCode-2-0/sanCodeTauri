@@ -33,3 +33,9 @@ hr {
 button {
   margin: 2px;
 }
+
+input{
+    background-color: white;
+    padding: 5px;
+    margin: 5px;
+}
