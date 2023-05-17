@@ -1,5 +1,5 @@
 import React from "react";
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 // COMPONENTS
 import Table from "./components/Table";
 import NewData from "./components/NewData";
@@ -27,12 +27,19 @@ const customStyles = {
 
 function App() {
   return (
-    <div className="light-grey">
-      {/* HOME SCREEN */}
-      <HomeScreen />
-      {/* To activate the Report Table, uncomment this */}
-      {/* <ReportScreen customStyles={customStyles} /> */}
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/home-screen" element={<HomeScreen />} />
+        <Route path="/report-screen" element={<ReportScreen />} />
+      </Routes>
+    </BrowserRouter>
+
+    // <div className="light-grey">
+    //   {/* HOME SCREEN */}
+    //   <HomeScreen />
+    //   {/* To activate the Report Table, uncomment this */}
+    //   {/* <ReportScreen customStyles={customStyles} /> */}
+    // </div>
   );
 }
 

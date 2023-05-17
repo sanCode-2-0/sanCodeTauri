@@ -26,7 +26,7 @@ const HomeScreen = () => {
         </div>
 
         {/* Breadcrumbs section and logo */}
-        <div className="sticky-bottom mt-auto">
+        <div className="bottom sticky-bottom mt-auto">
           <hr />
           <div className="col l8">
             <nav>

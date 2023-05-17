@@ -33,3 +33,9 @@ hr {
 button {
   margin: 2px;
 }
+
+.bottom {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
