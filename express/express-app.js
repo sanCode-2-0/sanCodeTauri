@@ -1,21 +1,44 @@
 const express = require('express');
 const app = express();
 const cors = require("cors");
+const sqlite3 = require('sqlite3').verbose();
 
 app.use(cors());
 
-// Endpoint to return report data
-app.get("/report", (req, res) => {
-    const sqlite3 = require('sqlite3').verbose();
+//Open a database connection
+//Open a database RTCPeerConnection
+const db = new sqlite3.Database('database/sanCodeTrial.db', (err) => {
+    if (err) {
+        console.error(err.message);
+    }
+    console.log('Connected to the database.');
+});
+//Endpoint to validate that student exists in the database
+app.get("/students/:admissionNumber", async (req, res) => {
+    const admissionNumber = req.params.admissionNumber;
+    console.log(admissionNumber);
 
-    // Open database connection
-    const db = new sqlite3.Database('database/sanCodeTrial.db', (err) => {
+    // Select table
+    db.all('SELECT * FROM sanCodeTrialStudentTable', [], (err, rows) => {
         if (err) {
             console.error(err.message);
         }
-        console.log('Connected to the database.');
-    });
 
+        // Transform the rows to objects
+        const data = rows.map((row) => {
+            const obj = {};
+            Object.keys(row).forEach((key) => {
+                obj[key] = row[key];
+            });
+            return obj;
+        });
+
+        res.json(data);
+    });
+})
+
+// Endpoint to return report data
+app.get("/report", (req, res) => {
     // Select table
     db.all('SELECT * FROM sanCodeTrialReportTable', [], (err, rows) => {
         if (err) {
