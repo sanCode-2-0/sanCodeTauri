@@ -19,21 +19,20 @@ app.get("/students/:admissionNumber", async (req, res) => {
     console.log(admissionNumber);
 
     // Select table
-    db.all('SELECT * FROM sanCodeTrialStudentTable', [], (err, rows) => {
+    db.all(`SELECT * FROM sanCodeTrialStudentTable WHERE admNo=${admissionNumber}`, [], (err, rows) => {
         if (err) {
             console.error(err.message);
         }
-
         // Transform the rows to objects
-        const data = rows.map((row) => {
-            const obj = {};
-            Object.keys(row).forEach((key) => {
-                obj[key] = row[key];
-            });
-            return obj;
-        });
+        // const data = rows.map((row) => {
+        //     const obj = {};
+        //     Object.keys(row).forEach((key) => {
+        //         obj[key] = row[key];
+        //     });
+        //     return obj;
+        // });
 
-        res.json(data);
+        res.json(rows);
     });
 })
 

@@ -41,6 +41,6 @@ input {
 }
 
 .modal {
-  top: auto;
+  /* top: auto; */
   bottom: 0;
 }
