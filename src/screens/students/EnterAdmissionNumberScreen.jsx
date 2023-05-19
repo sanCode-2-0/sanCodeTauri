@@ -120,19 +120,28 @@ const EnterAdmissionNumber = () => {
                           </tbody>
                         </table>
                         <blockquote>Choose an action</blockquote>
-                        <button className="btn waves-effect waves-green">
-                          Add a New record
-                        </button>
+                        <Link to={`../full-entry/${studentAdmNo}`}>
+                          <button className="btn waves-effect waves-green">
+                            Full Entry
+                          </button>
+                        </Link>
                         <button className="btn waves-effect waves-green">
                           Quick Update
                         </button>
-                      </div>
-                      <div className="modal-footer">
+                        <br />
+                        <small>
+                          * Full Entry : Create a new record for the student
+                        </small>
+                        <br />
+                        <small>
+                          * Quick Update : Only update the temperature reading
+                          of the student
+                        </small>
                         <a
                           href="#!"
                           className="modal-close waves-effect waves-green btn-flat"
                         >
-                          Agree
+                          CLOSE
                         </a>
                       </div>
                     </>

@@ -7,6 +7,7 @@ import NewData from "./components/NewData";
 // SCREENS
 import HomeScreen from "./screens/HomeScreen";
 import EnterAdmissionNumberScreen from "./screens/students/EnterAdmissionNumberScreen";
+import FullEntry from "./screens/students/FullEntryScreen";
 import ReportScreen from "./screens/ReportScreen";
 
 // Report table custom styles
@@ -38,6 +39,7 @@ function App() {
               path="enter-admission-number-screen"
               element={<EnterAdmissionNumberScreen />}
             />
+            <Route path="full-entry" element={<FullEntry />} />
           </Route>
         </Routes>
       </BrowserRouter>

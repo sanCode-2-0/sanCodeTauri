@@ -41,6 +41,13 @@ input {
 }
 
 .modal {
-  /* top: auto; */
+  top: auto;
   bottom: 0;
+  overflow: hidden;
+}
+
+.modal-close {
+  position: absolute;
+  top: auto;
+  right: 0;
 }
