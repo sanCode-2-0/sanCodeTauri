@@ -7,31 +7,27 @@ app.use(cors());
 
 //Open a database connection
 //Open a database RTCPeerConnection
-const db = new sqlite3.Database('database/sanCodeTrial.db', (err) => {
+
+//Database variables
+const databaseName = "sanCodeTrial.db"
+const tableName = "sanCodeTrialStudentTable"
+
+const db = new sqlite3.Database(`database/${databaseName}`, (err) => {
     if (err) {
         console.error(err.message);
     }
     console.log('Connected to the database.');
 });
+
 //Endpoint to validate that student exists in the database
 app.get("/students/:admissionNumber", async (req, res) => {
     const admissionNumber = req.params.admissionNumber;
-    console.log(admissionNumber);
 
     // Select table
-    db.all(`SELECT * FROM sanCodeTrialStudentTable WHERE admNo=${admissionNumber}`, [], (err, rows) => {
+    db.all(`SELECT * FROM ${tableName} WHERE admNo=${admissionNumber}`, [], (err, rows) => {
         if (err) {
             console.error(err.message);
         }
-        // Transform the rows to objects
-        // const data = rows.map((row) => {
-        //     const obj = {};
-        //     Object.keys(row).forEach((key) => {
-        //         obj[key] = row[key];
-        //     });
-        //     return obj;
-        // });
-
         res.json(rows);
     });
 })
@@ -39,7 +35,7 @@ app.get("/students/:admissionNumber", async (req, res) => {
 // Endpoint to return report data
 app.get("/report", (req, res) => {
     // Select table
-    db.all('SELECT * FROM sanCodeTrialReportTable', [], (err, rows) => {
+    db.all(`SELECT * FROM ${tableName}`, [], (err, rows) => {
         if (err) {
             console.error(err.message);
         }

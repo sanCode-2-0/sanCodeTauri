@@ -1,6 +1,12 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\express",
+    "\\src",
+    "\\src\\components",
+    "\\src\\screens",
+    "\\src\\screens\\students"
   ],
+  "SelectedNode": "\\src\\screens\\students\\FullEntryScreen.jsx",
   "PreviewInSolutionExplorer": false
 }
