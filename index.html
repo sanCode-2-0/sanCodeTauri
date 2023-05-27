@@ -1,34 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
 
     <script src="node_modules\jquery\dist\jquery.min.js"></script>
 
     <!-- Add Materialize CSS and JS -->
-    <link
-      rel="stylesheet"
-      href="node_modules\materialize-css\dist\css\materialize.min.css"
-    />
+    <link rel="stylesheet"
+          href="node_modules\materialize-css\dist\css\materialize.min.css" />
 
     <!-- Material ICONS -->
-    <link
-      rel="stylesheet"
-      href="../node_modules/material-icons/css/material-icons.min.css"
-    />
+    <link rel="stylesheet"
+          href="../node_modules/material-icons/css/material-icons.min.css" />
     <script src="node_modules\materialize-css\dist\js\materialize.min.js">
-      // Initialize Materialize Components
-      import M from "materialize-css"
-      M.AutoInit()
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var modals = document.querySelectorAll('.modal');
+            M.Modal.init(modals);
+        });
     </script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>sanCode</title>
-  </head>
+</head>
 
-  <body>
+<body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
-  </body>
+</body>
 </html>

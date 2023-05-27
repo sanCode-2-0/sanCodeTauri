@@ -23,34 +23,53 @@ const EnterAdmissionNumber = () => {
     const [fName, setFirstName] = useState("");
     const [sName, setSecondName] = useState("");
     const [studentClass, setStudentClass] = useState("");
+    const [tempReading, setTempReading] = useState("");
+    const [complain, setComplain] = useState("");
+    const [ailment, setAilment] = useState("");
+    const [medication, setMedication] = useState("");
+    const [timestamp, setTimeStamp] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+
 
 
     const fetchAdmissionNumber = async () => {
-        //Send student admission no. to the API endpoint : http://localhost:13256
-        const response = await fetch(
-            `http://localhost:3000/students/${studentAdmNo}`
-        );
-        if (response.ok) {
-            const data = await response.json();
+        setIsLoading(true);
 
-            //   Access the first element of the array
+        try {
+            const response = await fetch(`http://localhost:3000/students/${studentAdmNo}`);
 
-            if (data.length != 0) {
-                const student = data[0];
-                const { fName, sName, class: studentClass } = student;
-                setFirstName(fName);
-                setSecondName(sName);
-                setStudentClass(studentClass);
+            if (response.ok) {
+                const data = await response.json();
+
+                // Access the first element of the array
+                if (data.length !== 0) {
+                    const student = data[0];
+                    const { fName, sName, class: studentClass, tempReading, complain, ailment, medication, timestamp } = student;
+
+                    setFirstName(fName);
+                    setSecondName(sName);
+                    setStudentClass(studentClass);
+                    setTempReading(tempReading)
+                    setComplain(complain)
+                    setAilment(ailment)
+                    setMedication(medication)
+                    setTimeStamp(timestamp)
+                } else {
+                    setFirstName("");
+                }
             } else {
-                setFirstName("");
+                console.error("Failed to fetch data from API");
+                alert("DATA API ENDPOINT IS DOWN!");
             }
-        } else {
-            console.error("Failed to fetch data from API");
-            alert("DATA API ENDPOINT IS DOWN!");
+        } catch (error) {
+            console.error("An error occurred while fetching data:", error);
+            alert("An error occurred while fetching data");
         }
 
+        setIsLoading(false);
         hasRun = true;
     };
+
 
     return (
         <>
@@ -90,6 +109,7 @@ const EnterAdmissionNumber = () => {
                                 </a>
 
                                 {/* ENTER ADMISSION NUMBER BOTTOM MODAL */}
+
                                 <div id="enter-admission-number-modal" className="modal">
                                     {fName != "" ? (
                                         <>
@@ -123,7 +143,7 @@ const EnterAdmissionNumber = () => {
                                                     </tbody>
                                                 </table>
                                                 <blockquote>Choose an action</blockquote>
-                                                <Link to={`../full-entry/? studentAdmNo=${studentAdmNo} fName=${fName} sName=${sName} studentClass=${studentClass}`}>
+                                                <Link to={`../full-entry/? studentAdmNo=${studentAdmNo} fName=${fName} sName=${sName} studentClass=${studentClass} tempReading=${tempReading} complain=${complain} ailment=${ailment} medication=${medication} timestamp=${timestamp}`}>
                                                     <button className="btn waves-effect waves-green">
                                                         Full Entry
                                                     </button>

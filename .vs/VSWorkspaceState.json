@@ -1,12 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\express",
     "\\src",
-    "\\src\\components",
-    "\\src\\screens",
-    "\\src\\screens\\students"
+    "\\src\\components"
   ],
-  "SelectedNode": "\\src\\screens\\students\\FullEntryScreen.jsx",
+  "SelectedNode": "\\src\\components\\LoadingSpinner.jsx",
   "PreviewInSolutionExplorer": false
 }
