@@ -1,63 +1,75 @@
 /* Material ICONS */
 
 :root {
-    --blue: #06a3da;
+  --blue: #06a3da;
 }
 
 hr {
-    width: 90%;
-    height: 2.5px;
-    background-color: var(--blue);
-    border: 0;
+  width: 90%;
+  height: 2.5px;
+  background-color: var(--blue);
+  border: 0;
 }
 
 .container-fluid {
-    display: flex !important;
-    flex-direction: column !important;
-    min-height: 95vh !important;
-    justify-content: space-between;
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 95vh !important;
+  justify-content: space-between;
 }
 
 .main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
 }
 
 .nav-wrapper a {
-    padding: 10px;
+  padding: 10px;
 }
 
 button {
-    margin: 2px;
+  margin: 2px;
 }
 
 input {
-    background-color: white;
-    padding: 5px;
-    margin: 5px;
+  background-color: white;
+  padding: 5px;
+  margin: 5px;
 }
 
 .modal {
-    top: auto;
-    bottom: 0;
-    overflow: hidden;
+  top: auto;
+  bottom: 0;
+  overflow: hidden;
 }
 
 .modal-close {
-    position: absolute;
-    top: auto;
-    right: 0;
+  position: absolute;
+  top: auto;
+  right: 0;
 }
 
-.full-entry-padding{
-    height: 50vh !important;
-    padding: 20px;
+.full-entry-padding {
+  height: 60vh !important;
+  padding: 20px;
 }
 
-.close-button{
-    padding: 3px;
+.close-button {
+  display: inline-block;
+  padding: 0px 10px;
+  background-color: var(--blue);
+  color: white;
+  font-weight: bold;
+  border-width: 2px;
+  cursor: pointer;
+}
 
+.close-button:hover {
+  transition: 0.5s;
+  border-color: var(--blue);
+  color: var(--blue);
+  background-color: white;
 }

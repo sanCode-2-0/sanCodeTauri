@@ -4,6 +4,7 @@ const cors = require("cors");
 const sqlite3 = require('sqlite3').verbose();
 
 app.use(cors());
+app.use(express.json());
 
 //Open a database connection
 //Open a database RTCPeerConnection
@@ -32,6 +33,13 @@ app.get("/students/:admissionNumber", async (req, res) => {
     });
 })
 
+// Endpoint to accept data from the full entry submission
+app.post("/student-full-entry", async (req, res) => {
+    const { studentAdmNo, tempReading, complain, ailment, medication } = req.body;
+
+    // Update record where student admno is studentAdmNo
+
+})
 // Endpoint to return report data
 app.get("/report", (req, res) => {
     // Select table
