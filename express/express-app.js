@@ -38,8 +38,19 @@ app.post("/student-full-entry", async (req, res) => {
     const { studentAdmNo, tempReading, complain, ailment, medication } = req.body;
 
     // Update record where student admno is studentAdmNo
+    db.run(
+        `UPDATE ${tableName} SET tempReading=?, complain=?, ailment=?, medication=? WHERE admNo=?`,
+        [tempReading, complain, ailment, medication, studentAdmNo],
+        (error) => {
+            if (error) {
+                res.status(500).send("Error updating the record.");
+            } else {
+                res.send("Record updated successfully.");
+            }
+        }
+    );
+});
 
-})
 // Endpoint to return report data
 app.get("/report", (req, res) => {
     // Select table

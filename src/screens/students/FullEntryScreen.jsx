@@ -1,5 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 
+// React-router-dom
+import { useNavigate } from "react-router-dom";
+
 //STYLESHEET
 import "../screens.css";
 
@@ -18,7 +21,11 @@ const FullEntryScreen = () => {
   const [complain, setComplain] = useState("");
   const [ailment, setAilment] = useState("");
   const [medication, setMedication] = useState("");
+  const [submitted, setSubmitted] = useState(false);
   const [emptyInput, setEmptyInput] = useState(false);
+
+  // useNavigate() hook to handle redirects in react-router-dom
+  const redirectNavigation = useNavigate();
 
   const location = useLocation();
   let URL_data_array = [];
@@ -51,24 +58,26 @@ const FullEntryScreen = () => {
   const inputRef2 = useRef();
   const inputRef3 = useRef();
   const inputRef4 = useRef();
-  const handleKeyDown = (event) => {
-    const { key } = event;
-    const inputs = [inputRef1, inputRef2, inputRef3, inputRef4];
-
-    if (key === "ArrowUp" || key === "ArrowDown") {
-      event.preventDefault();
-      const currentIndex = inputs.findIndex(
-        (input) => input.current === document.activeElement
-      );
-      const nextIndex = key === "ArrowUp" ? currentIndex - 1 : currentIndex + 1;
-
-      if (nextIndex >= 0 && nextIndex < inputs.length) {
-        inputs[nextIndex].current.focus();
-      }
-    }
-  };
 
   useEffect(() => {
+    const handleKeyDown = (event) => {
+      const { key } = event;
+      const inputs = [inputRef1, inputRef2, inputRef3, inputRef4];
+
+      if (key === "ArrowUp" || key === "ArrowDown") {
+        event.preventDefault();
+        const currentIndex = inputs.findIndex(
+          (input) => input.current === document.activeElement
+        );
+        const nextIndex =
+          key === "ArrowUp" ? currentIndex - 1 : currentIndex + 1;
+
+        if (nextIndex >= 0 && nextIndex < inputs.length) {
+          inputs[nextIndex].current.focus();
+        }
+      }
+    };
+
     document.addEventListener("keydown", handleKeyDown);
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
@@ -112,14 +121,33 @@ const FullEntryScreen = () => {
       };
 
       fetch(api_endpoint, requestOptions)
-        .then((response) =>
-          response.ok
-            ? M.toast({ html: "Submitted!", classes: "light-green lighten-1" })
-            : M.toast({
-                html: "The Server is DOWN.!",
-                classes: "red lighten-1",
-              })
-        )
+        .then((response) => {
+          if (response.ok) {
+            M.toast({
+              html: "Submitted!",
+              classes: "light-green lighten-1",
+              displayLength: 1000,
+              completeCallback: () => {
+                M.toast({
+                  html: "You're being redirected back to the home page....!",
+                  classes: "light-blue lighten-1",
+                  displayLength: 5000,
+                  inDuration: 500,
+                  // Callback function when toast is dismissed
+                  completeCallback: () =>
+                    redirectNavigation(
+                      "/enter-admission-number-screen?reload=true"
+                    ),
+                });
+              },
+            });
+          } else {
+            M.toast({
+              html: "The Server is DOWN.!",
+              classes: "red lighten-1",
+            });
+          }
+        })
         .catch((error) => console.error(error));
     }
   };

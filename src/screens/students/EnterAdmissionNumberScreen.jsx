@@ -1,6 +1,6 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 // react-router-dom
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 //STYLESHEET
 import "../screens.css";
 
@@ -20,6 +20,20 @@ $(document).ready(function () {
 
 let hasRun;
 const EnterAdmissionNumber = () => {
+  // Grab Data in the URL
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  let paramValue = params.get("reload");
+  // If paramValue is not false, reload the page
+  const redirectNavigation = useNavigate();
+
+  useEffect(() => {
+    if (paramValue != null) {
+      // useNavigation() hook to handle redirects in react-router-dom
+      window.location.href = "/enter-admission-number-screen";
+    }
+  }, [paramValue]);
+
   const [studentAdmNo, setStudentAdmNo] = useState();
   const [fName, setFirstName] = useState("");
   const [sName, setSecondName] = useState("");
@@ -90,6 +104,7 @@ const EnterAdmissionNumber = () => {
       buttonRef.current.click();
     }
   };
+
   return (
     <>
       <div className="row">
@@ -136,7 +151,7 @@ const EnterAdmissionNumber = () => {
                 {/* ENTER ADMISSION NUMBER BOTTOM MODAL */}
 
                 <div id="enter-admission-number-modal" className="modal">
-                  {fName != "" ? (
+                  {studentAdmNo != null ? (
                     <>
                       <div className="modal-content bottom-sheet left-align">
                         <table>
@@ -169,7 +184,7 @@ const EnterAdmissionNumber = () => {
                         </table>
                         <blockquote>Choose an action</blockquote>
                         <Link
-                          to={`../full-entry/? studentAdmNo=${studentAdmNo} fName=${fName} sName=${sName} studentClass=${studentClass} tempReading=${tempReading} complain=${complain} ailment=${ailment} medication=${medication} timestamp=${timestamp} studentAdmNo=${studentAdmNo}`}
+                          to={`../full-entry/? studentAdmNo=${studentAdmNo} fName=${fName} sName=${sName} studentClass=${studentClass} tempReading=${tempReading} complain=${complain} ailment=${ailment} medication=${medication} timestamp=${timestamp}`}
                         >
                           <button className="btn waves-effect waves-green">
                             Full Entry
