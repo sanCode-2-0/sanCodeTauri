@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\components"
+    "\\src\\screens",
+    "\\src\\screens\\students"
   ],
-  "SelectedNode": "\\src\\components\\LoadingSpinner.jsx",
+  "SelectedNode": "\\src\\screens\\students\\QuickUpdateScreen.jsx",
   "PreviewInSolutionExplorer": false
 }

@@ -19,7 +19,7 @@ const HomeScreen = () => {
               </div>
               <div className="card-action">
                 <div className="row">
-                  <Link to="/enter-admission-number-screen">
+                  <Link to="/enter-admission-number-screen?reload=true">
                     <button className="waves-effect waves-light btn">
                       STUDENTS
                     </button>

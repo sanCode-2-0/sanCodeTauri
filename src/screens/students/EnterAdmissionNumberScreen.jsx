@@ -151,7 +151,7 @@ const EnterAdmissionNumber = () => {
                 {/* ENTER ADMISSION NUMBER BOTTOM MODAL */}
 
                 <div id="enter-admission-number-modal" className="modal">
-                  {studentAdmNo != null ? (
+                  {fName !== "" ? (
                     <>
                       <div className="modal-content bottom-sheet left-align">
                         <table>
@@ -184,15 +184,19 @@ const EnterAdmissionNumber = () => {
                         </table>
                         <blockquote>Choose an action</blockquote>
                         <Link
-                          to={`../full-entry/? studentAdmNo=${studentAdmNo} fName=${fName} sName=${sName} studentClass=${studentClass} tempReading=${tempReading} complain=${complain} ailment=${ailment} medication=${medication} timestamp=${timestamp}`}
+                          to={`../full-entry/?studentAdmNo=[${studentAdmNo}],fName=[${fName}],sName=[${sName}],studentClass=[${studentClass}],tempReading=[${tempReading}],complain=[${complain}],ailment=[${ailment}],medication=[${medication}],timestamp=[${timestamp}]`}
                         >
                           <button className="btn waves-effect waves-green">
                             Full Entry
                           </button>
                         </Link>
-                        <button className="btn waves-effect waves-green">
-                          Quick Update
-                        </button>
+                        <Link
+                            to={`../quick-update-screen/?studentAdmNo=[${studentAdmNo}],fName=[${fName}],sName=[${sName}],studentClass=[${studentClass}],tempReading=[${tempReading}],complain=[${complain}],ailment=[${ailment}],medication=[${medication}],timestamp=[${timestamp}]`}
+                        >
+                          <button className="btn waves-effect waves-green">
+                            Quick Update
+                          </button>
+                        </Link>
                         <br />
                         <small>
                           * Full Entry : Create a new record for the student

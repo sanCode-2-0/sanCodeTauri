@@ -51,6 +51,24 @@ app.post("/student-full-entry", async (req, res) => {
     );
 });
 
+// Endpoint to accept data from the quick update submission
+app.post("/student-quick-update", async (req, res) => {
+    const { studentAdmNo, tempReading, complain, ailment, medication } = req.body;
+
+    // Update record where student admission number is studentAdmNo
+    db.run(
+        `UPDATE ${tableName} SET tempReading=? WHERE admNo=?`,
+        [tempReading, studentAdmNo],
+        (error) => {
+            if (error) {
+                res.status(500).send("Error updating the record.");
+            } else {
+                res.send("Record updated successfully.");
+            }
+        }
+    );
+});
+
 // Endpoint to return report data
 app.get("/report", (req, res) => {
     // Select table
