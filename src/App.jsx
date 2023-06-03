@@ -10,6 +10,10 @@ import EnterAdmissionNumberScreen from "./screens/students/EnterAdmissionNumberS
 import QuickUpdateScreen from "./screens/students/QuickUpdateScreen";
 import FullEntry from "./screens/students/FullEntryScreen";
 import ReportScreen from "./screens/ReportScreen";
+// STAFF
+import EnterIDNumberScreen from "./screens/staff/EnterIDNumberScreen.jsx";
+import StaffQuickUpdateScreen from "./screens/staff/StaffQuickUpdateScreen.jsx";
+import StaffFullEntryScreen from "./screens/staff/StaffFullEntryScreen.jsx";
 
 // Report table custom styles
 const customStyles = {
@@ -36,6 +40,7 @@ function App() {
                     <Route path="/">
                         <Route index element={<HomeScreen />} />
                         <Route path="report-screen" element={<ReportScreen />} />
+                        {/*STUDENT SCREENS*/}
                         <Route
                             path="enter-admission-number-screen"
                             element={<EnterAdmissionNumberScreen />}
@@ -45,6 +50,25 @@ function App() {
                             element={<QuickUpdateScreen />}
                         />
                         <Route path="full-entry" element={<FullEntry />} />
+
+                        {/*STAFF SCREENS*/}
+                        <Route
+                            path={"enter-id-number-screen"}
+                            element={<EnterIDNumberScreen />}
+                            />
+                        <Route
+                            path={"staff-quick-update-screen"}
+                            element={<StaffQuickUpdateScreen/>}
+                            />
+                        <Route
+                            path={"staff-full-entry-screen"}
+                            element={<StaffFullEntryScreen/>}
+                            />
+                        <Route
+                            path={"report-screen"}
+                            element={<ReportScreen customStyles={customStyles}/>}
+                            />
+
                     </Route>
                 </Routes>
             </BrowserRouter>

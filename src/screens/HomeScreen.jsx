@@ -25,12 +25,17 @@ const HomeScreen = () => {
                     </button>
                   </Link>
 
-                  <button className="waves-effect waves-light btn">
-                    STAFF
-                  </button>
-                  <button className="waves-effect waves-light btn">
-                    REPORT
-                  </button>
+                  <Link to="/enter-id-number-screen?reload=true">
+                    <button className="waves-effect waves-light btn">
+                      STAFF
+                    </button>
+                  </Link>
+
+                  <Link to="/report-screen">
+                    <button className="waves-effect waves-light btn">
+                      REPORT
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>

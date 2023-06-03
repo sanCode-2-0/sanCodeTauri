@@ -73,3 +73,11 @@ input {
   color: var(--blue);
   background-color: white;
 }
+
+.view-summary-modal {
+  width: 1200px;
+}
+
+.view-summary-modal td{
+  margin: 100px;
+}
