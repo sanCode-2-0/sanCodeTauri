@@ -184,7 +184,7 @@ const EnterAdmissionNumber = () => {
                         </table>
                         <blockquote>Choose an action</blockquote>
                         <Link
-                          to={`../full-entry/? studentAdmNo=${studentAdmNo} fName=${fName} sName=${sName} studentClass=${studentClass} tempReading=${tempReading} complain=${complain} ailment=${ailment} medication=${medication} timestamp=${timestamp}`}
+                          to={`../full-entry/?studentAdmNo=${studentAdmNo} fName=${fName} sName=${sName} studentClass=${studentClass} tempReading=${tempReading} complain=${complain} ailment=${ailment} medication=${medication} timestamp=${timestamp}`}
                         >
                           <button className="btn waves-effect waves-green">
                             Full Entry

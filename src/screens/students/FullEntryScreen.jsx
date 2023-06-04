@@ -37,6 +37,10 @@ const FullEntryScreen = () => {
     return { [key]: value };
   });
 
+  const params = new URLSearchParams(location.search);
+  let paramValue = params.get("studentAdmNo");
+  console.log(paramValue);
+
   const grabTempReading = (event) => {
     setTempReading(event.target.value);
   };
