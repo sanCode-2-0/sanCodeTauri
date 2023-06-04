@@ -4,9 +4,12 @@ import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 //STYLESHEET
 import "../screens.css";
 
+
 // react icons
-import { IoChevronForward } from "react-icons/io5";
+import {IoChevronForward, IoPersonOutline} from "react-icons/io5";
 import { IoReturnDownBackOutline } from "react-icons/io5";
+
+import SummaryTable from "../../components/studentSummary.jsx";
 
 // Initialize Materialize Modals
 // Initialize Jquery using jsdom
@@ -151,7 +154,7 @@ const EnterAdmissionNumber = () => {
                 {/* ENTER ADMISSION NUMBER BOTTOM MODAL */}
 
                 <div id="enter-admission-number-modal" className="modal">
-                  {studentAdmNo != null ? (
+                  {fName !== "" ? (
                     <>
                       <div className="modal-content bottom-sheet left-align">
                         <table>
@@ -184,15 +187,19 @@ const EnterAdmissionNumber = () => {
                         </table>
                         <blockquote>Choose an action</blockquote>
                         <Link
-                          to={`../full-entry/?studentAdmNo=${studentAdmNo} fName=${fName} sName=${sName} studentClass=${studentClass} tempReading=${tempReading} complain=${complain} ailment=${ailment} medication=${medication} timestamp=${timestamp}`}
+                          to={`../full-entry/?studentAdmNo=[${studentAdmNo}],fName=[${fName}],sName=[${sName}],studentClass=[${studentClass}],tempReading=[${tempReading}],complain=[${complain}],ailment=[${ailment}],medication=[${medication}],timestamp=[${timestamp}]`}
                         >
                           <button className="btn waves-effect waves-green">
                             Full Entry
                           </button>
                         </Link>
-                        <button className="btn waves-effect waves-green">
-                          Quick Update
-                        </button>
+                        <Link
+                            to={`../quick-update-screen/?studentAdmNo=[${studentAdmNo}],fName=[${fName}],sName=[${sName}],studentClass=[${studentClass}],tempReading=[${tempReading}],complain=[${complain}],ailment=[${ailment}],medication=[${medication}],timestamp=[${timestamp}]`}
+                        >
+                          <button className="btn waves-effect waves-green">
+                            Quick Update
+                          </button>
+                        </Link>
                         <br />
                         <small>
                           * Full Entry : Create a new record for the student
@@ -230,6 +237,37 @@ const EnterAdmissionNumber = () => {
                     </>
                   )}
                 </div>
+
+                <a
+                    className="modal-trigger"
+                    href="#view-summary-modal"
+                >
+                  <button className={"btn light-blue right"}>
+                    <small>
+                      <IoPersonOutline/>
+                      View Summary
+                    </small>
+                  </button>
+                </a>
+
+                {/*VIEW SUMMARY MODAL*/}
+                <div id="view-summary-modal" className="modal bottom-sheet modal-fixed-footer view-summary-modal">
+                  <>
+                    <div className="modal-content left-align">
+                      <SummaryTable/>
+                    </div>
+                    <div className={"modal-footer"}>
+                    <a
+                        href="#!"
+                        className="modal-close waves-effect waves-green"
+                    >
+                      <button className={"btn"}>CLOSE</button>
+                    </a>
+                    </div>
+                  </>
+                </div>
+
+
               </div>
             </div>
           </div>

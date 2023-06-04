@@ -7,20 +7,16 @@ import { useNavigate } from "react-router-dom";
 import "../screens.css";
 
 //REACT-ICONS
-import {IoArrowBackCircleSharp, IoPersonAddSharp} from "react-icons/io5";
-import { IoCloseCircle } from "react-icons/io5";
 import { IoReturnDownBackOutline } from "react-icons/io5";
+import {IoArrowBackCircleSharp} from "react-icons/io5";
 
 import { useLocation } from "react-router-dom";
 
 // COMPONENTS
 import DateFormat from "../../components/DateFormat";
 
-const FullEntryScreen = () => {
+const StaffQuickUpdateScreen = () => {
     const [tempReading, setTempReading] = useState(0.0);
-    const [complain, setComplain] = useState("");
-    const [ailment, setAilment] = useState("");
-    const [medication, setMedication] = useState("");
 
     // useNavigate() hook to handle redirects in react-router-dom
     const redirectNavigation = useNavigate();
@@ -28,7 +24,7 @@ const FullEntryScreen = () => {
 
     const location = useLocation();
 
-    let studentAdmNo_display;
+    let idNo_display;
     let tempReading_display;
     let complain_display;
     let ailment_display;
@@ -45,7 +41,7 @@ const FullEntryScreen = () => {
     });
 
     // Access the individual parameters
-    studentAdmNo_display = params['studentAdmNo'];
+    idNo_display = params['idNo'];
     tempReading_display = params['tempReading'];
     complain_display = params['complain'];
     ailment_display = params['ailment'];
@@ -112,21 +108,15 @@ const FullEntryScreen = () => {
     //   Submit Data for Full Entry to the API endpoint
     const submitFullEntryData = () => {
         if (
-            tempReading == 0.0 ||
-            complain == "" ||
-            ailment == "" ||
-            medication == ""
+            tempReading == 0.0
         ) {
             M.toast({ html: "FILL IN ALL INPUTS!", classes: "red lighten-1" });
         } else {
-            const api_endpoint = "http://localhost:3000/student-full-entry";
+            const api_endpoint = "http://localhost:3000/staff-quick-update";
 
-            const student_data = {
-                studentAdmNo: studentAdmNo_display,
+            const staff_data = {
+                idNo: idNo_display,
                 tempReading: tempReading,
-                complain: complain,
-                ailment: ailment,
-                medication: medication,
             };
 
             const requestOptions = {
@@ -134,7 +124,7 @@ const FullEntryScreen = () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(student_data),
+                body: JSON.stringify(staff_data),
             };
 
             fetch(api_endpoint, requestOptions)
@@ -153,7 +143,7 @@ const FullEntryScreen = () => {
                                     // Callback function when toast is dismissed
                                     completeCallback: () =>
                                         redirectNavigation(
-                                            "/enter-admission-number-screen?reload=true"
+                                            "/enter-id-number-screen?reload=true"
                                         ),
                                 });
                             },
@@ -169,9 +159,11 @@ const FullEntryScreen = () => {
         }
     };
 
-    const redirectToEnterAdmissionScreen = () =>{
-        window.location.href="/enter-admission-number-screen?reload=true";
+    // Redirect back to admission number screen
+    const redirectToEnterIdNoScreen = () =>{
+        window.location.href="/enter-id-number-screen?reload=true";
     }
+
     return (
         <>
             <div className="row">
@@ -180,7 +172,7 @@ const FullEntryScreen = () => {
                         <div className="card full-entry-padding">
                             <div className="card-content">
                                 <i className={"right"}>
-                                    <button className={"btn light-blue darken-1"} onClick={redirectToEnterAdmissionScreen}>
+                                    <button className={"btn light-blue darken-1"} onClick={redirectToEnterIdNoScreen}>
                                         <IoArrowBackCircleSharp size={"34"} color={"#fff"}/>
                                     </button>
                                     <hr />
@@ -248,8 +240,8 @@ const FullEntryScreen = () => {
                                 <hr />
                                 <br />
 
-                                <div className="row">
-                                    <div className="input-field col s6">
+                                <div className="">
+                                    <div className="input-field">
                                         <input
                                             id="first_name"
                                             ref={inputRef1}
@@ -262,44 +254,8 @@ const FullEntryScreen = () => {
                                         />
                                         <label htmlFor="first_name">Temperature Reading *</label>
                                     </div>
-                                    <div className="input-field col s6">
-                                        <input
-                                            id="last_name"
-                                            ref={inputRef2}
-                                            type="text"
-                                            required
-                                            onKeyDown={handleKeyPressed}
-                                            onChange={grabComplain}
-                                        />
-                                        <label htmlFor="last_name">Complains *</label>
-                                    </div>
                                 </div>
 
-                                <div className="row">
-                                    <div className="input-field col s6">
-                                        <input
-                                            id="first_name"
-                                            ref={inputRef3}
-                                            type="text"
-                                            autoFocus
-                                            required
-                                            onKeyDown={handleKeyPressed}
-                                            onChange={grabAilment}
-                                        />
-                                        <label htmlFor="first_name">Ailment *</label>
-                                    </div>
-                                    <div className="input-field col s6">
-                                        <input
-                                            id="last_name"
-                                            ref={inputRef4}
-                                            type="text"
-                                            required
-                                            onKeyDown={handleKeyPressed}
-                                            onChange={grabMedication}
-                                        />
-                                        <label htmlFor="last_name">Medication *</label>
-                                    </div>
-                                </div>
                                 <div className="card-action center-align">
                                     <button
                                         className="btn center-align"
@@ -321,4 +277,4 @@ const FullEntryScreen = () => {
     );
 };
 
-export default FullEntryScreen;
+export default StaffQuickUpdateScreen;

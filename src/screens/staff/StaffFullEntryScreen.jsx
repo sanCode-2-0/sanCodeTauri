@@ -16,7 +16,7 @@ import { useLocation } from "react-router-dom";
 // COMPONENTS
 import DateFormat from "../../components/DateFormat";
 
-const FullEntryScreen = () => {
+const StaffFullEntryScreen = () => {
     const [tempReading, setTempReading] = useState(0.0);
     const [complain, setComplain] = useState("");
     const [ailment, setAilment] = useState("");
@@ -28,7 +28,7 @@ const FullEntryScreen = () => {
 
     const location = useLocation();
 
-    let studentAdmNo_display;
+    let idNo_display;
     let tempReading_display;
     let complain_display;
     let ailment_display;
@@ -45,7 +45,7 @@ const FullEntryScreen = () => {
     });
 
     // Access the individual parameters
-    studentAdmNo_display = params['studentAdmNo'];
+    idNo_display = params['idNo'];
     tempReading_display = params['tempReading'];
     complain_display = params['complain'];
     ailment_display = params['ailment'];
@@ -119,10 +119,10 @@ const FullEntryScreen = () => {
         ) {
             M.toast({ html: "FILL IN ALL INPUTS!", classes: "red lighten-1" });
         } else {
-            const api_endpoint = "http://localhost:3000/student-full-entry";
+            const api_endpoint = "http://localhost:3000/staff-full-entry";
 
-            const student_data = {
-                studentAdmNo: studentAdmNo_display,
+            const staff_data = {
+                idNo: idNo_display,
                 tempReading: tempReading,
                 complain: complain,
                 ailment: ailment,
@@ -134,7 +134,7 @@ const FullEntryScreen = () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(student_data),
+                body: JSON.stringify(staff_data),
             };
 
             fetch(api_endpoint, requestOptions)
@@ -153,7 +153,7 @@ const FullEntryScreen = () => {
                                     // Callback function when toast is dismissed
                                     completeCallback: () =>
                                         redirectNavigation(
-                                            "/enter-admission-number-screen?reload=true"
+                                            "/enter-id-number-screen?reload=true"
                                         ),
                                 });
                             },
@@ -169,8 +169,8 @@ const FullEntryScreen = () => {
         }
     };
 
-    const redirectToEnterAdmissionScreen = () =>{
-        window.location.href="/enter-admission-number-screen?reload=true";
+    const redirectToEnterIdNoScreen = () =>{
+        window.location.href="/enter-id-number-screen?reload=true";
     }
     return (
         <>
@@ -180,7 +180,7 @@ const FullEntryScreen = () => {
                         <div className="card full-entry-padding">
                             <div className="card-content">
                                 <i className={"right"}>
-                                    <button className={"btn light-blue darken-1"} onClick={redirectToEnterAdmissionScreen}>
+                                    <button className={"btn light-blue darken-1"} onClick={redirectToEnterIdNoScreen}>
                                         <IoArrowBackCircleSharp size={"34"} color={"#fff"}/>
                                     </button>
                                     <hr />
@@ -312,6 +312,7 @@ const FullEntryScreen = () => {
                                         </small>
                                     </button>
                                 </div>
+                                    Quick Tip : Use the arrow keys <small><b>Arrow Up</b></small> and <small><b>Arrow Down</b></small> to navigate.
                             </div>
                         </div>
                     </div>
@@ -321,4 +322,4 @@ const FullEntryScreen = () => {
     );
 };
 
-export default FullEntryScreen;
+export default StaffFullEntryScreen;
