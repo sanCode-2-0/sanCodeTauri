@@ -60,7 +60,7 @@ const ReportScreen = () => {
                 <p>Loading...</p>
             ) : (
                 <>
-                    <p>Students with <b>fever</b> ( today ) : {studentAilmentCounts.fever} ( This represents counting stuff like redirects to and fro - Those redirects should either have a value or be null) </p>
+                    <p>Students with <b>fever</b> : {studentAilmentCounts.fever} ( This represents counting stuff like redirects to and fro - Those redirects should either have a value or be null) </p>
                     <p>No of records with <b>temperature readings present</b> : {tempReadingPresent}</p>
                     <hr/>
 
@@ -69,6 +69,7 @@ const ReportScreen = () => {
                         <li key={index}>{JSON.stringify(item)}</li>
                     ))}
                 </ul>
+
                     </>
             )}
         </>

@@ -32,7 +32,9 @@ const customStyles = {
     },
 };
 
+
 function App() {
+
     return (
         <>
             <BrowserRouter>
@@ -66,7 +68,11 @@ function App() {
                             />
                         <Route
                             path={"report-screen"}
-                            element={<ReportScreen customStyles={customStyles}/>}
+                            element={<ReportScreen />}
+                            />
+                        <Route
+                            path={"table-report"}
+                            element={<Table customStyles={customStyles}/>}
                             />
 
                     </Route>

@@ -31,7 +31,7 @@ const HomeScreen = () => {
                     </button>
                   </Link>
 
-                  <Link to="/report-screen">
+                  <Link to="/table-report">
                     <button className="waves-effect waves-light btn">
                       REPORT
                     </button>
