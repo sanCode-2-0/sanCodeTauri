@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const cors = require("cors");
 const sqlite3 = require('sqlite3').verbose();
+// With xlsx, convert JSON data into an EXCEL spreadsheet
+const XLSX = require('xlsx');
 const moment = require("moment-timezone");
 // Array holding ailments checked
 const ailmentsChecked = require("./assets/ailmentsChecked");
@@ -99,7 +101,7 @@ app.post("/staff-full-entry", async (req, res) => {
     // Update record where staff Kenyan id No is idNo
     db.run(
         `UPDATE ${staffTableName} SET tempReading=?, complain=?, ailment=?, medication=?, timestamp=? WHERE idNo=?`,
-        [tempReading, complain, ailment, medication, timestamp,idNo],
+        [tempReading, complain, ailment, medication, timestamp, idNo],
         (error) => {
             if (error) {
                 res.status(500).send("Error updating the record.");
@@ -153,8 +155,13 @@ app.get("/staff-data", (req, res) => {
 });
 
 // Endpoint to update report data
-app.get("/update-report",(req, res)=>{
-    db.all(`SELECT * FROM ${tableName}`, [], (err, rows) => {
+app.get("/update-report", (req, res) => {
+    // Select all records from both the students table and staff table
+    db.all(`SELECT staffRecordID AS recordID, idNo AS admNo, fName, sName, NULL AS tName, NULL AS fourthName, NULL AS class, tempReading, complain, ailment, medication, timestamp
+    FROM ${staffTableName}
+    UNION
+    SELECT recordID, admNo, fName, sName, tName, fourthName, class, tempReading, complain, ailment, medication, timestamp
+    FROM ${tableName}`, [], (err, rows) => {
 
 
         if (err) {
@@ -170,10 +177,10 @@ app.get("/update-report",(req, res)=>{
             return obj;
         });
 
-        let filteredData=[]; //Just like the data array but holds records whose date matches today's
+        let filteredData = []; //Just like the data array but holds records whose date matches today's
         let dateToBeChecked
         // Loop through the data array which holds the records as individual objects.
-        for(let dataArrayLength = 0; dataArrayLength < data.length; dataArrayLength++){
+        for (let dataArrayLength = 0; dataArrayLength < data.length; dataArrayLength++) {
             //Filter and only retrieve records whose timestamp matches to today's
 
             // Format the date to Moment.js format
@@ -181,8 +188,8 @@ app.get("/update-report",(req, res)=>{
 
             // If it falls between start of today and end of the day, spread it into the filteredData array
             // Since it will be handling a lot of data, using the spread operator is kind of effective
-            if(dateToBeChecked.isBetween(startOfToday, endOfToday)){
-                filteredData = [...filteredData,data[dataArrayLength]];
+            if (dateToBeChecked.isBetween(startOfToday, endOfToday)) {
+                filteredData = [...filteredData, data[dataArrayLength]];
             }
         }
 
@@ -196,12 +203,12 @@ app.get("/update-report",(req, res)=>{
 
         let countByAilment = {}
         let count = 0;
-        ailmentsChecked.forEach((eachAilment)=>{
+        ailmentsChecked.forEach((eachAilment) => {
             count = filteredData.filter((item) => item.ailment === eachAilment).length;
 
             // Pass the ailments and respective counts to the countByAilment array
             countByAilment[ailmentsChecked] = count;
-        },0)
+        }, 0)
 
         // countByAilment contains an object with the disease and count for that day
         // Update the report table
@@ -209,9 +216,9 @@ app.get("/update-report",(req, res)=>{
         // have today's data, now update the report table
         const todayAsANumber = moment().date();
 
-        for(const eachAilmentToUpdate in countByAilment){
+        for (const eachAilmentToUpdate in countByAilment) {
 
-            if(countByAilment.hasOwnProperty(eachAilmentToUpdate)){
+            if (countByAilment.hasOwnProperty(eachAilmentToUpdate)) {
                 const updateValue = countByAilment[eachAilmentToUpdate];
 
                 //SQL statement to carry out the update
@@ -225,9 +232,9 @@ app.get("/update-report",(req, res)=>{
 
 
                 //Run the sql statement
-                db.run(sqlUpdateReportTable, (error)=>{
-                    if(error){
-                        console.error("SQLITE STATEMENT EXECUTION STATEMENT ERROR : "+error.message)
+                db.run(sqlUpdateReportTable, (error) => {
+                    if (error) {
+                        console.error("SQLITE STATEMENT EXECUTION STATEMENT ERROR : " + error.message)
                     } else {
                         // Maybe log it? some log file?
                         // console.log(`Updated ${eachAilmentToUpdate} with ${updateValue} for this day of the month : ${todayAsANumber}`)
@@ -248,7 +255,7 @@ app.get("/update-report",(req, res)=>{
 
         // Store all these SQL statements as batch which I'll process outside the loop
         let batchSQLRevertStatements = [];
-        while(startingDate.isSameOrBefore(dateEndOfMonth, 'day')){
+        while (startingDate.isSameOrBefore(dateEndOfMonth, 'day')) {
             // Sqlite3 - update the table and clear the values
             // timestamp - filteredData
             const columnNumber = startingDate.format("DD")
@@ -263,23 +270,88 @@ app.get("/update-report",(req, res)=>{
         }
 
         // Execute statements using a transaction
-        db.serialize(()=>{
+        db.serialize(() => {
             // Execute each update statement in the array
-            batchSQLRevertStatements.forEach((eachSQLStatement)=>{
-                db.run(eachSQLStatement, (error)=>{
-                    if(error){
-                        console.error("BATCH TRANSACTION ERROR : "+error)
+            batchSQLRevertStatements.forEach((eachSQLStatement) => {
+                db.run(eachSQLStatement, (error) => {
+                    if (error) {
+                        console.error("BATCH TRANSACTION ERROR : " + error)
                     } else {
                         // console.error("BATCH TRANSACTION FOR "+eachSQLStatement+ "EXECUTED")
                     }
                 })
             })
         })
-        res.json({status: "successful"});
+
+
+        res.json({ status: "successful" })
     });
 })
 
+// Endpoint to generate excel
+app.get("/generate-excel", (req, res) => {
+    // Select all records from both the students table and staff table
+    db.all(`SELECT staffRecordID AS recordID, idNo AS admNo, fName, sName, NULL AS tName, NULL AS fourthName, NULL AS class, tempReading, complain, ailment, medication, timestamp
+    FROM ${staffTableName}
+    UNION
+    SELECT recordID, admNo, fName, sName, tName, fourthName, class, tempReading, complain, ailment, medication, timestamp
+    FROM ${tableName}`, [], (err, rows) => {
 
+
+        if (err) {
+            console.error(err.message);
+        }
+
+        // Transform the rows to objects
+        const data = rows.map((row) => {
+            const obj = {};
+            Object.keys(row).forEach((key) => {
+                obj[key] = row[key];
+            });
+            return obj;
+        });
+
+        let filteredData = []; //Just like the data array but holds records whose date matches today's
+        let dateToBeChecked
+        // Loop through the data array which holds the records as individual objects.
+        for (let dataArrayLength = 0; dataArrayLength < data.length; dataArrayLength++) {
+            //Filter and only retrieve records whose timestamp matches to today's
+
+            // Format the date to Moment.js format
+            dateToBeChecked = moment(data[dataArrayLength].timestamp, "YYYY-MM-DD HH:mm:ss")
+
+            // If it falls between start of today and end of the day, spread it into the filteredData array
+            // Since it will be handling a lot of data, using the spread operator is kind of effective
+            if (dateToBeChecked.isBetween(startOfToday, endOfToday)) {
+                filteredData = [...filteredData, data[dataArrayLength]];
+            }
+        }
+        // Use xlsx module to convert the filteredData array into an excel document
+        const worksheet = XLSX.utils.json_to_sheet(filteredData);
+        const workbook = XLSX.utils.book_new(worksheet);
+
+        // Change the worksheet headers to names that kind of look good.
+        XLSX.utils.sheet_add_aoa(worksheet, [["ID", "Admission Number", "First Name", "Second Name", "Third Name", "Fourth Name", "Class", "Temperature Reading", "Complains", "Ailment", "Medication", "TimeStamp"]], {
+            origin: "A1", font: { bold: true }, border: {
+                top: { style: "thin", color: "000000" }, // Set top border style and color
+                bottom: { style: "thin", color: "000000" }, // Set bottom border style and color
+                left: { style: "thin", color: "000000" }, // Set left border style and color
+                right: { style: "thin", color: "000000" }, // Set right border style and color
+            },
+        })
+        // Change columns width based on the width of the characters
+        worksheet["!cols"] = [{ wch: 10 }];
+        // Append the worksheet to the workbook
+        // Set today's date as the title of the worksheet
+        XLSX.utils.book_append_sheet(workbook, worksheet, moment().format("dddd, Do MMMM YYYY"))
+
+        // Export it into the 'workbooks' folder
+        XLSX.writeFile(workbook, `workbooks/${moment().format("dddd, Do MMMM YYYY")}.xlsx`, { "compression": true })
+
+
+        res.json(filteredData);
+    })
+})
 
 // Endpoint to return report data
 app.get("/report", (req, res) => {

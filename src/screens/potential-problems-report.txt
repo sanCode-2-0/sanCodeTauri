@@ -1,0 +1,8 @@
+2. Attaching more and more complains.
+    all complains into an array then use the javascript json_string() method to convert the array to a json string. 
+
+
+3. Being able to update the complains and medication after the record has been submitted
+    Add an Edit Page so that I'm able to edit all that. 
+    Change the text field to be able to append more and more complains and ailments.
+

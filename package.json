@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "tauri": "tauri",
-    "start": "concurrently \"cd express && pm2 start express-app.js --watch\" \"tauri dev\" "
+    "start": "concurrently \"cd express && pm2 start express-app.js\" \"tauri dev\" "
   },
   "dependencies": {
     "@emotion/react": "^11.11.0",
