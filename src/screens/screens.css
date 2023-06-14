@@ -4,6 +4,10 @@
   --blue: #06a3da;
 }
 
+body{
+  overflow: hidden;
+}
+
 hr {
   width: 90%;
   height: 2.5px;

@@ -16,8 +16,6 @@ const databaseName = "sanCodeTrial.db"
 const tableName = "sanCodeTrialStudentTable"
 const staffTableName = "sanCodeTrialStaffTable"
 const reportTableName = "sanCodeTrialReportTable"
-// Timestamp
-const timestamp = moment().tz('Africa/Nairobi').format('YYYY-MM-DD HH:mm:ss');
 // Start of today date
 const startOfToday = moment().startOf("day");
 const endOfToday = moment().endOf("day");
@@ -48,8 +46,8 @@ app.post("/student-full-entry", async (req, res) => {
 
     // Update record where student admno is studentAdmNo
     db.run(
-        `UPDATE ${tableName} SET tempReading=?, complain=?, ailment=?, medication=?, timestamp=? WHERE admNo=?`,
-        [tempReading, complain, ailment, medication, timestamp, studentAdmNo],
+        `UPDATE ${tableName} SET tempReading=?, complain=?, ailment=?, medication=? WHERE admNo=?`,
+        [tempReading, complain, ailment, medication, studentAdmNo],
         (error) => {
             if (error) {
                 res.status(500).send("Error updating the record.");
@@ -66,8 +64,8 @@ app.post("/student-quick-update", async (req, res) => {
 
     // Update record where student admission number is studentAdmNo
     db.run(
-        `UPDATE ${tableName} SET tempReading=?, timestamp=? WHERE admNo=?`,
-        [tempReading, timestamp, studentAdmNo],
+        `UPDATE ${tableName} SET tempReading=? WHERE admNo=?`,
+        [tempReading, studentAdmNo],
         (error) => {
             if (error) {
                 res.status(500).send("Error updating the record.");
@@ -98,8 +96,8 @@ app.post("/staff-full-entry", async (req, res) => {
 
     // Update record where staff Kenyan id No is idNo
     db.run(
-        `UPDATE ${staffTableName} SET tempReading=?, complain=?, ailment=?, medication=?, timestamp=? WHERE idNo=?`,
-        [tempReading, complain, ailment, medication, timestamp,idNo],
+        `UPDATE ${staffTableName} SET tempReading=?, complain=?, ailment=?, medication=? WHERE idNo=?`,
+        [tempReading, complain, ailment, medication,idNo],
         (error) => {
             if (error) {
                 res.status(500).send("Error updating the record.");
@@ -116,8 +114,8 @@ app.post("/staff-quick-update", async (req, res) => {
 
     // Update record where staff idNo is idNo
     db.run(
-        `UPDATE ${staffTableName} SET tempReading=?, timestamp=? WHERE admNo=?`,
-        [tempReading, timestamp, idNo],
+        `UPDATE ${staffTableName} SET tempReading=? WHERE admNo=?`,
+        [tempReading, idNo],
         (error) => {
             if (error) {
                 res.status(500).send("Error updating the record.");
@@ -275,7 +273,7 @@ app.get("/update-report",(req, res)=>{
                 })
             })
         })
-        res.json({status: "successful"});
+        res.json([{status: "successful"},...filteredData]);
     });
 })
 

@@ -21,6 +21,29 @@
             var modals = document.querySelectorAll('.modal');
             M.Modal.init(modals);
         });
+
+
+        $(function(){
+            $(".tricky").on({
+                mouseover:function(){
+                    $(this).css({
+                        left:(Math.random()*90)+"%",
+                        top:(Math.random()*90)+"%",
+                    });
+                }
+            });
+            $(".btn-wrap").hover(function() {
+                $(this).toggleClass('active');
+            });
+        });
+
+        $('.tricky').bind('touchstart', function(){
+            $(this).css({
+                left:(Math.random()*90)+"%",
+                top:(Math.random()*90)+"%"
+            });
+        })
+
     </script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

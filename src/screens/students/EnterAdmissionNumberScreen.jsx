@@ -1,9 +1,10 @@
 import { useState, useRef, useEffect } from "react";
 // react-router-dom
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+// anime js
+import anime from "animejs"
 //STYLESHEET
 import "../screens.css";
-
 
 // react icons
 import {IoChevronForward, IoPersonOutline} from "react-icons/io5";
@@ -21,8 +22,33 @@ $(document).ready(function () {
   $(".modal").modal({ dismissible: false });
 });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 let hasRun;
+
 const EnterAdmissionNumber = () => {
+
   // Grab Data in the URL
   const location = useLocation();
   const params = new URLSearchParams(location.search);
@@ -37,7 +63,7 @@ const EnterAdmissionNumber = () => {
     }
   }, [paramValue]);
 
-  const [studentAdmNo, setStudentAdmNo] = useState();
+  const [studentAdmNo, setStudentAdmNo] = useState(0);
   const [fName, setFirstName] = useState("");
   const [sName, setSecondName] = useState("");
   const [studentClass, setStudentClass] = useState("");
@@ -124,7 +150,7 @@ const EnterAdmissionNumber = () => {
                     type="text"
                     className="light-blue darken-2"
                     autoFocus
-                    autoComplete="on"
+                    autoComplete="off"
                     onKeyDown={handleKeyPressed}
                     onChange={grabAdmNo}
                   />
@@ -138,18 +164,23 @@ const EnterAdmissionNumber = () => {
                   className="modal-trigger"
                   href="#enter-admission-number-modal"
                 >
-                  <button
+                  {/*If admNo empty present that button*/}
+                        <button
                     className="waves-effect waves-light btn center-align"
                     onClick={fetchAdmissionNumber}
                     ref={buttonRef}
-                  >
+                        >
                     SUBMIT (
                     <small>
                       <IoReturnDownBackOutline /> Enter
                     </small>
                     )
                   </button>
+
                 </a>
+                <small className={'white-text'}>
+                  Click <IoReturnDownBackOutline /> Enter Key
+                </small>
 
                 {/* ENTER ADMISSION NUMBER BOTTOM MODAL */}
 

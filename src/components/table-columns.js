@@ -1,6 +1,6 @@
 export const columns = [
     {
-        Header: 'Disease',
+        Header: 'Diseases ( First Cases Only )',
         accessor: 'disease',
     },
     {
