@@ -10,6 +10,7 @@ import EnterAdmissionNumberScreen from "./screens/students/EnterAdmissionNumberS
 import QuickUpdateScreen from "./screens/students/QuickUpdateScreen";
 import FullEntry from "./screens/students/FullEntryScreen";
 import ReportScreen from "./screens/ReportScreen";
+import AnalyticsScreen from "./screens/Analytics/AnalyticsScreen.jsx"
 // STAFF
 import EnterIDNumberScreen from "./screens/staff/EnterIDNumberScreen.jsx";
 import StaffQuickUpdateScreen from "./screens/staff/StaffQuickUpdateScreen.jsx";
@@ -74,7 +75,11 @@ function App() {
                             path={"table-report"}
                             element={<Table customStyles={customStyles}/>}
                             />
-
+                        {/*ANALYTICS*/}
+                        <Route
+                            path={"analytics-report"}
+                            element={<AnalyticsScreen />}
+                        />
                     </Route>
                 </Routes>
             </BrowserRouter>

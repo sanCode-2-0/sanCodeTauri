@@ -5,10 +5,12 @@ const sqlite3 = require('sqlite3').verbose();
 // With xlsx, convert JSON data into an EXCEL spreadsheet
 const XLSX = require('xlsx');
 const moment = require("moment-timezone");
+const bodyParser = require("body-parser")
 // Array holding ailments checked
 const ailmentsChecked = require("./assets/ailmentsChecked");
 app.use(cors());
 app.use(express.json());
+app.use(bodyParser.json());
 
 //Open a database connection
 //Open a database RTCPeerConnection
@@ -31,6 +33,30 @@ const db = new sqlite3.Database(`database/${databaseName}`, (err) => {
     console.log('Connected to the database.');
 });
 
+app.post("/creatable-data",(req, res)=>{
+    let { selectedData } = req.body;
+    selectedData = JSON.stringify(selectedData);
+
+    db.run(`INSERT INTO exampleList(complains) VALUES (?)`, [selectedData], (error) => {
+        if (error) {
+            console.error(error.message);
+        } else {
+            console.log("INSERTED");
+        }
+    });
+
+})
+
+app.get("/creatable-data-get",(req, res)=>{
+    db.all(`SELECT complains FROM exampleList`,(error,rows)=>{
+        if(error){
+            console.error(error.message)
+        }
+
+        res.json(rows)
+    })
+})
+
 //Endpoint to validate that student exists in the database
 app.get("/students/:admissionNumber", async (req, res) => {
     const admissionNumber = req.params.admissionNumber;
@@ -50,8 +76,8 @@ app.post("/student-full-entry", async (req, res) => {
 
     // Update record where student admno is studentAdmNo
     db.run(
-        `UPDATE ${tableName} SET tempReading=?, complain=?, ailment=?, medication=?, timestamp=? WHERE admNo=?`,
-        [tempReading, complain, ailment, medication, timestamp, studentAdmNo],
+        `UPDATE ${tableName} SET tempReading=?, complain=?, ailment=?, medication=? WHERE admNo=?`,
+        [tempReading, complain, ailment, medication, studentAdmNo],
         (error) => {
             if (error) {
                 res.status(500).send("Error updating the record.");
@@ -68,8 +94,8 @@ app.post("/student-quick-update", async (req, res) => {
 
     // Update record where student admission number is studentAdmNo
     db.run(
-        `UPDATE ${tableName} SET tempReading=?, timestamp=? WHERE admNo=?`,
-        [tempReading, timestamp, studentAdmNo],
+        `UPDATE ${tableName} SET tempReading=?WHERE admNo=?`,
+        [tempReading, studentAdmNo],
         (error) => {
             if (error) {
                 res.status(500).send("Error updating the record.");
@@ -100,8 +126,8 @@ app.post("/staff-full-entry", async (req, res) => {
 
     // Update record where staff Kenyan id No is idNo
     db.run(
-        `UPDATE ${staffTableName} SET tempReading=?, complain=?, ailment=?, medication=?, timestamp=? WHERE idNo=?`,
-        [tempReading, complain, ailment, medication, timestamp, idNo],
+        `UPDATE ${staffTableName} SET tempReading=?, complain=?, ailment=?, medication=? WHERE idNo=?`,
+        [tempReading, complain, ailment, medication, idNo],
         (error) => {
             if (error) {
                 res.status(500).send("Error updating the record.");
@@ -118,8 +144,8 @@ app.post("/staff-quick-update", async (req, res) => {
 
     // Update record where staff idNo is idNo
     db.run(
-        `UPDATE ${staffTableName} SET tempReading=?, timestamp=? WHERE admNo=?`,
-        [tempReading, timestamp, idNo],
+        `UPDATE ${staffTableName} SET tempReading=? WHERE admNo=?`,
+        [tempReading, idNo],
         (error) => {
             if (error) {
                 res.status(500).send("Error updating the record.");
@@ -350,6 +376,24 @@ app.get("/generate-excel", (req, res) => {
 
 
         res.json(filteredData);
+    })
+})
+
+// Endpoint to return disease names
+app.get("/disease",(req, res)=>{
+    db.all(`SELECT disease FROM ${reportTableName}`,[],(err,rows)=>{
+        if(err){
+            console.error(err.message);
+        }
+
+        const data = rows.map((row)=>{
+            const obj = {};
+            Object.keys(row).forEach((key)=>{
+                obj[key] = row[key];
+            })
+            return obj;
+        })
+        res.json(rows);
     })
 })
 
