@@ -29,8 +29,9 @@ const endOfToday = moment().endOf("day");
 const db = new sqlite3.Database(`database/${databaseName}`, (err) => {
     if (err) {
         console.error(err.message);
+    } else{
+        console.log('Connected to the database.');
     }
-    console.log('Connected to the database.');
 });
 
 app.post("/creatable-data",(req, res)=>{
