@@ -40,7 +40,9 @@ const StaffFullEntryScreen = () => {
 
   const params = {};
   keyValuePairs.forEach((keyValuePair) => {
-    const [key, value] = keyValuePair.split("=");
+    const equalsIndex = keyValuePair.indexOf("=");
+    const key = keyValuePair.substring(0, equalsIndex);
+    const value = keyValuePair.substring(equalsIndex + 1);
     params[key] = decodeURIComponent(value.replace(/\[|\]/g, ""));
   });
 

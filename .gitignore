@@ -25,3 +25,4 @@ dist-ssr
 express/database/sanCodeTrial.db
 *.db
 *.db
+*.txt
