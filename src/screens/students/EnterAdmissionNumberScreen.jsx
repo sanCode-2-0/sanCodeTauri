@@ -2,12 +2,12 @@ import { useState, useRef, useEffect } from "react";
 // react-router-dom
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 // anime js
-import anime from "animejs"
+import anime from "animejs";
 //STYLESHEET
 import "../screens.css";
 
 // react icons
-import {IoChevronForward, IoPersonOutline} from "react-icons/io5";
+import { IoChevronForward, IoPersonOutline } from "react-icons/io5";
 import { IoReturnDownBackOutline } from "react-icons/io5";
 
 import SummaryTable from "../../components/studentSummary.jsx";
@@ -22,33 +22,9 @@ $(document).ready(function () {
   $(".modal").modal({ dismissible: false });
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 let hasRun;
 
 const EnterAdmissionNumber = () => {
-
   // Grab Data in the URL
   const location = useLocation();
   const params = new URLSearchParams(location.search);
@@ -165,20 +141,19 @@ const EnterAdmissionNumber = () => {
                   href="#enter-admission-number-modal"
                 >
                   {/*If admNo empty present that button*/}
-                        <button
+                  <button
                     className="waves-effect waves-light btn center-align"
                     onClick={fetchAdmissionNumber}
                     ref={buttonRef}
-                        >
+                  >
                     SUBMIT (
                     <small>
                       <IoReturnDownBackOutline /> Enter
                     </small>
                     )
                   </button>
-
                 </a>
-                <small className={'white-text'}>
+                <small className={"white-text"}>
                   Click <IoReturnDownBackOutline /> Enter Key
                 </small>
 
@@ -218,14 +193,21 @@ const EnterAdmissionNumber = () => {
                         </table>
                         <blockquote>Choose an action</blockquote>
                         <Link
-                          to={`../full-entry/?studentAdmNo=[${studentAdmNo}],fName=[${fName}],sName=[${sName}],studentClass=[${studentClass}],tempReading=[${tempReading}],complain=[${complain}],ailment=[${ailment}],medication=[${medication}],timestamp=[${timestamp}]`}
+                          to={`../full-entry/?studentAdmNo=[${studentAdmNo}]>fName=[${fName}]>sName=[${sName}]>studentClass=[${studentClass}]>tempReading=[${tempReading}]>complain=[${complain}]>ailment=[${ailment}]>medication=[${medication}]>timestamp=[${timestamp}]`}
                         >
                           <button className="btn waves-effect waves-green">
                             Full Entry
                           </button>
                         </Link>
                         <Link
-                            to={`../quick-update-screen/?studentAdmNo=[${studentAdmNo}],fName=[${fName}],sName=[${sName}],studentClass=[${studentClass}],tempReading=[${tempReading}],complain=[${complain}],ailment=[${ailment}],medication=[${medication}],timestamp=[${timestamp}]`}
+                          to={`../full-edit/?studentAdmNo=[${studentAdmNo}]>fName=[${fName}]>sName=[${sName}]>studentClass=[${studentClass}]>tempReading=[${tempReading}]>complain=[${complain}]>ailment=[${ailment}]>medication=[${medication}]>timestamp=[${timestamp}]`}
+                        >
+                          <button className="btn waves-effect waves-green">
+                            Edit the last full entry
+                          </button>
+                        </Link>
+                        <Link
+                          to={`../quick-update-screen/?studentAdmNo=[${studentAdmNo}],fName=[${fName}],sName=[${sName}],studentClass=[${studentClass}],tempReading=[${tempReading}],complain=[${complain}],ailment=[${ailment}],medication=[${medication}],timestamp=[${timestamp}]`}
                         >
                           <button className="btn waves-effect waves-green">
                             Quick Update
@@ -269,36 +251,34 @@ const EnterAdmissionNumber = () => {
                   )}
                 </div>
 
-                <a
-                    className="modal-trigger"
-                    href="#view-summary-modal"
-                >
+                <a className="modal-trigger" href="#view-summary-modal">
                   <button className={"btn light-blue right"}>
                     <small>
-                      <IoPersonOutline/>
+                      <IoPersonOutline />
                       View Summary
                     </small>
                   </button>
                 </a>
 
                 {/*VIEW SUMMARY MODAL*/}
-                <div id="view-summary-modal" className="modal bottom-sheet modal-fixed-footer view-summary-modal">
+                <div
+                  id="view-summary-modal"
+                  className="modal bottom-sheet modal-fixed-footer view-summary-modal"
+                >
                   <>
                     <div className="modal-content left-align">
-                      <SummaryTable/>
+                      <SummaryTable />
                     </div>
                     <div className={"modal-footer"}>
-                    <a
+                      <a
                         href="#!"
                         className="modal-close waves-effect waves-green"
-                    >
-                      <button className={"btn"}>CLOSE</button>
-                    </a>
+                      >
+                        <button className={"btn"}>CLOSE</button>
+                      </a>
                     </div>
                   </>
                 </div>
-
-
               </div>
             </div>
           </div>

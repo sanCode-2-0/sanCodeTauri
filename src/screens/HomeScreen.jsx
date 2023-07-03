@@ -42,6 +42,12 @@ const HomeScreen = () => {
                       ANALYTICS
                     </button>
                   </Link>
+
+                  <Link to="/excel-upload">
+                    <button className="waves-effect waves-light btn">
+                      UPLOAD STUDENT DETAILS
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>

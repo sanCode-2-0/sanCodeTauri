@@ -137,62 +137,57 @@ const FullEntryScreen = () => {
   //   Submit Data for Full Entry to the API endpoint
   const submitFullEntryData = () => {
     let updatedArray = [];
-    if (complain.join(",") == "") {
-      updatedArray = [...complain, complainInputValue.trim()];
-      setComplain(updatedArray);
-      setComplainInputValue("");
-    }
-    if (tempReading == 0.0 || ailment == "" || medication == "") {
-      M.toast({ html: "FILL IN ALL INPUTS!", classes: "red lighten-1" });
-    } else {
-      const api_endpoint = "http://localhost:3000/student-full-entry";
+    updatedArray = [...complain, complainInputValue.trim()];
+    setComplain(updatedArray);
+    setComplainInputValue("");
 
-      const student_data = {
-        studentAdmNo: studentAdmNo_display,
-        tempReading: tempReading,
-        complain: updatedArray.join(",") || complain.join(","),
-        ailment: ailment,
-        medication: medication,
-      };
+    const api_endpoint = "http://localhost:3000/student-full-entry";
 
-      const requestOptions = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(student_data),
-      };
+    const student_data = {
+      studentAdmNo: studentAdmNo_display,
+      tempReading: tempReading_display,
+      complain: updatedArray.join(","),
+      ailment: ailment_display,
+      medication: medication_display,
+    };
 
-      fetch(api_endpoint, requestOptions)
-        .then((response) => {
-          if (response.ok) {
-            M.toast({
-              html: "Submitted!",
-              classes: "light-green lighten-1",
-              displayLength: 1000,
-              completeCallback: () => {
-                M.toast({
-                  html: "You're being redirected back to the home page....!",
-                  classes: "light-blue lighten-1",
-                  displayLength: 3000,
-                  inDuration: 500,
-                  // Callback function when toast is dismissed
-                  completeCallback: () =>
-                    redirectNavigation(
-                      "/enter-admission-number-screen?reload=true"
-                    ),
-                });
-              },
-            });
-          } else {
-            M.toast({
-              html: "The Server is DOWN.!",
-              classes: "red lighten-1",
-            });
-          }
-        })
-        .catch((error) => console.error(error));
-    }
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(student_data),
+    };
+
+    fetch(api_endpoint, requestOptions)
+      .then((response) => {
+        if (response.ok) {
+          M.toast({
+            html: "Submitted!",
+            classes: "light-green lighten-1",
+            displayLength: 1000,
+            completeCallback: () => {
+              M.toast({
+                html: "You're being redirected back to the home page....!",
+                classes: "light-blue lighten-1",
+                displayLength: 3000,
+                inDuration: 500,
+                // Callback function when toast is dismissed
+                completeCallback: () =>
+                  redirectNavigation(
+                    "/enter-admission-number-screen?reload=true"
+                  ),
+              });
+            },
+          });
+        } else {
+          M.toast({
+            html: "The Server is DOWN.!",
+            classes: "red lighten-1",
+          });
+        }
+      })
+      .catch((error) => console.error(error));
   };
 
   const redirectToEnterAdmissionScreen = () => {
@@ -215,7 +210,7 @@ const FullEntryScreen = () => {
                   <hr />
                 </i>
                 <i className="right">
-                  <button className="activator btn">Add New Record</button>
+                  <button className="activator btn">Edit Last Entry</button>
                 </i>
                 <blockquote>
                   <span className="grey-text text-darken-3">
@@ -279,13 +274,16 @@ const FullEntryScreen = () => {
                       id="first_name"
                       ref={inputRef1}
                       type="number"
-                      autoFocus
+                      value={tempReading_display}
+                      disabled
                       step="any"
                       required
                       onKeyDown={handleKeyPressed}
                       onChange={grabTempReading}
                     />
-                    <label htmlFor="first_name">Temperature Reading *</label>
+                    <label htmlFor="first_name" className="active">
+                      Temperature Reading *
+                    </label>
                   </div>
                   <div className="input-field col s6">
                     <input
@@ -293,8 +291,7 @@ const FullEntryScreen = () => {
                       ref={inputRef2}
                       type="text"
                       required
-                      // onKeyDown={handleKeyPressed}
-                      // onChange={grabComplain}
+                      autoFocus
                       value={complainInputValue}
                       onChange={(entry) =>
                         setComplainInputValue(entry.target.value)
@@ -303,33 +300,38 @@ const FullEntryScreen = () => {
                     <button className="btn" onClick={addComplain}>
                       <small>Add Complain+</small>
                     </button>
-                    <label htmlFor="complain">Complains *</label>
+                    <label htmlFor="complain">Add a complain *</label>
                   </div>
                 </div>
 
                 <div className="row">
                   <div className="input-field col s6">
                     <input
-                      id="first_name"
+                      id="disabled"
                       ref={inputRef3}
                       type="text"
-                      autoFocus
-                      required
+                      disabled
+                      value={ailment_display}
                       onKeyDown={handleKeyPressed}
                       onChange={grabAilment}
                     />
-                    <label htmlFor="first_name">Ailment *</label>
+                    <label htmlFor="disabled" className="active">
+                      Ailment *
+                    </label>
                   </div>
                   <div className="input-field col s6">
                     <input
-                      id="last_name"
+                      id="disabled"
                       ref={inputRef4}
                       type="text"
-                      required
+                      disabled
+                      value={medication_display}
                       onKeyDown={handleKeyPressed}
                       onChange={grabMedication}
                     />
-                    <label htmlFor="last_name">Medication *</label>
+                    <label htmlFor="disabled" className="active">
+                      Medication *
+                    </label>
                   </div>
                 </div>
                 <div className="card-action center-align">

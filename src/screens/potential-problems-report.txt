@@ -1,8 +1,5 @@
-2. Attaching more and more complains.
-    all complains into an array then use the javascript json_string() method to convert the array to a json string. 
-
-
-3. Being able to update the complains and medication after the record has been submitted
-    Add an Edit Page so that I'm able to edit all that. 
-    Change the text field to be able to append more and more complains and ailments.
-
+1. Add way to upload excel file with student name and admission number so that it updates the data.
+2. Exporting the data, and updating the report.
+    -> use the readXlsxFile function from the read-excel-file module in React to access the Excel file when uploaded.
+    -> Create an API to accept the arrays representing the rows in the Excel file and extract the column and row values.
+    -> Push the data to the student table to create users.

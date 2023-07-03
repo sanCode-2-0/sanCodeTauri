@@ -26,3 +26,5 @@ express/database/sanCodeTrial.db
 *.db
 *.db
 *.txt
+*.txt
+express/database/sanCodeTrial.db
