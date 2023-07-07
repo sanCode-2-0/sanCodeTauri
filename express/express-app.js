@@ -380,6 +380,43 @@ app.get("/generate-excel", (req, res) => {
     })
 })
 
+//Endpoint to post new student details
+app.post("/new-students", async (req, res)=>{
+    //Binding to hold onto the array with student details
+    const arrayWithStudentDetails = req.body;
+
+    //We'll insert this data into the database
+
+    //Insert prepared statement
+    const insertQuery = `INSERT INTO ${tableName} (fName, sName, admNo, class) VALUES(?,?,?,?)`;
+    const selectQuery = `SELECT COUNT(*) as count from ${tableName} WHERE admNo=?`;
+
+    arrayWithStudentDetails.forEach((eachItem)=>{
+        //Check if the record exists
+        db.get(selectQuery, [eachItem[2]], (error, result)=>{
+            //Catch an expected error
+            if(error){
+                console.error("There's been an error. Details : ", error);
+                return;
+            }
+
+            //If there's no match, run the insert query
+            if(result.count === 0){
+                db.run(insertQuery, eachItem, (error)=>{
+                    if(error){
+                        console.error("Error inserting data : ", error);
+                    }
+
+                    //Log out to show data has been inserted
+                    console.log(`Row inserted with the Admission Number : ${eachItem[2]}`);
+                })
+            } else {
+                console.log(`Skipping insertion for admNo ${eachItem[2]} as it already exists.`)
+            }
+        })
+    })
+})
+
 // Endpoint to return disease names
 app.get("/disease",(req, res)=>{
     db.all(`SELECT disease FROM ${reportTableName}`,[],(err,rows)=>{

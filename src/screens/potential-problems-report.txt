@@ -3,3 +3,7 @@
     -> use the readXlsxFile function from the read-excel-file module in React to access the Excel file when uploaded.
     -> Create an API to accept the arrays representing the rows in the Excel file and extract the column and row values.
     -> Push the data to the student table to create users.
+
+
+//Handle errors associated with uploading an excel file.
+-> Throw an error invalid format or wrong format
