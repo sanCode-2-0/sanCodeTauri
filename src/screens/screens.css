@@ -85,3 +85,29 @@ input {
 .view-summary-modal td{
   margin: 100px;
 }
+
+.dropdown-list {
+  position: absolute;
+  z-index: 99;
+  top: 100%;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--blue);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  margin-top: 4px;
+  padding: 0;
+  width: 200px;
+  list-style: none;
+}
+
+.dropdown-item {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background-color: #d5d5d5;
+  color: #333;
+}

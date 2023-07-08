@@ -17,12 +17,21 @@ import { useLocation } from "react-router-dom";
 import DateFormat from "../../components/DateFormat";
 import { Alert } from "@mui/material";
 
+//React-widget dropdown
+import "react-widgets/styles.css";
+import DropdownList from "react-widgets/DropdownList";
+// import { diseasesData } from "../../assets/diseasesData";
+const diseaseValues = ["fever", "diarrhea", "tb"];
+
 const FullEntryScreen = () => {
   const [tempReading, setTempReading] = useState(0.0);
   const [complain, setComplain] = useState([]);
   const [ailment, setAilment] = useState("");
   const [medication, setMedication] = useState("");
   const [complainInputValue, setComplainInputValue] = useState("");
+  const [filter, setFilter] = useState("");
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [selectedValue, setSelectedValue] = useState("");
 
   // useNavigate() hook to handle redirects in react-router-dom
   const redirectNavigation = useNavigate();
@@ -87,9 +96,23 @@ const FullEntryScreen = () => {
     }
   };
 
-  const grabAilment = (event) => {
-    setAilment(event.target.value);
+  //Ailment dropdown
+  const handleAilmentInputChange = (event) => {
+    const inputValue = event.target.value;
+    setFilter(inputValue);
+    setShowDropdown(inputValue !== "");
+    setAilment(selectedValue);
   };
+
+  const handleDropdownSelect = (value) => {
+    setSelectedValue(value);
+    setFilter(value);
+    setShowDropdown(false);
+  };
+
+  const filteredValues = diseaseValues
+    .filter((value) => value.toLowerCase().includes(filter.toLowerCase()))
+    .slice(0, 5); // Limit the number of items to 5
 
   const grabMedication = (event) => {
     setMedication(event.target.value);
@@ -142,7 +165,7 @@ const FullEntryScreen = () => {
       setComplain(updatedArray);
       setComplainInputValue("");
     }
-    if (tempReading == 0.0 || ailment == "" || medication == "") {
+    if (tempReading == 0.0 || selectedValue == "" || medication == "") {
       M.toast({ html: "FILL IN ALL INPUTS!", classes: "red lighten-1" });
     } else {
       const api_endpoint = "http://localhost:3000/student-full-entry";
@@ -198,6 +221,8 @@ const FullEntryScreen = () => {
   const redirectToEnterAdmissionScreen = () => {
     window.location.href = "/enter-admission-number-screen?reload=true";
   };
+
+  //Block concerned with the
   return (
     <>
       <div className="row">
@@ -311,15 +336,30 @@ const FullEntryScreen = () => {
                   <div className="input-field col s6">
                     <input
                       id="first_name"
-                      ref={inputRef3}
                       type="text"
-                      autoFocus
+                      ref={inputRef3}
+                      autoComplete="off"
                       required
+                      value={filter}
                       onKeyDown={handleKeyPressed}
-                      onChange={grabAilment}
+                      onChange={handleAilmentInputChange}
                     />
                     <label htmlFor="first_name">Ailment *</label>
+                    {showDropdown && (
+                      <ul className="dropdown-list">
+                        {filteredValues.map((value) => (
+                          <li
+                            key={value}
+                            onClick={() => handleDropdownSelect(value)}
+                            className="dropdown-item"
+                          >
+                            {value}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
+
                   <div className="input-field col s6">
                     <input
                       id="last_name"
@@ -346,21 +386,6 @@ const FullEntryScreen = () => {
                 </div>
               </div>
             </div>
-
-            {/* {complain == []
-              ? complain.map((eachComplain) => (
-                  <span
-                    className="chip"
-                    key={complain.indexOf(eachComplain) + Math.random()}
-                  >
-                    {eachComplain}
-                  </span>
-                ))
-              : null} */}
-            {/* Check if the complain state is being properly updated. Verify that the addComplain function is correctly updating the state with the new complainInputValue.
-              Ensure that the complain state remains an array and doesn't accidentally become an object. Double-check that you're not inadvertently assigning an object to complain elsewhere in your code.
-              Verify that the complain state is not being mutated directly. React requires immutable state updates, so make sure you're using the proper methods to update the state array.
-              Confirm that the <span> elements are being rendered correctly. Check if any of the elements within the complain array contain objects instead of strings or numbers. If that's the case, you need to extract the required string or number from those objects before rendering them in the <span> elements. */}
             <div className="chip complain-text">
               <b>Previous Complains :</b> {complain_display.join(", ")}
             </div>

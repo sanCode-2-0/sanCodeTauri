@@ -77,8 +77,8 @@ app.post("/student-full-entry", async (req, res) => {
 
     // Update record where student admno is studentAdmNo
     db.run(
-        `UPDATE ${tableName} SET tempReading=?, complain=?, ailment=?, medication=? WHERE admNo=?`,
-        [tempReading, complain, ailment, medication, studentAdmNo],
+        `UPDATE ${tableName} SET tempReading=?, complain=?, ailment=?, medication=?WHERE admNo=?`,
+        [tempReading, complain, ailment, medication, studentAdmNo[0]],
         (error) => {
             if (error) {
                 res.status(500).send("Error updating the record.");
@@ -431,7 +431,7 @@ app.get("/disease",(req, res)=>{
             })
             return obj;
         })
-        res.json(rows);
+        res.json(data);
     })
 })
 
