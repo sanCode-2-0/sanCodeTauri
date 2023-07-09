@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "express-app.js",
+  "build": "pkg express-app.js -o express-app",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

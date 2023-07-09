@@ -1,10 +1,26 @@
-let diseasesData = [];
-//Fetch from the endpoint  http://localhost:3000/disease
-const response = await fetch("http://localhost:3000/disease");
-const data = await response.json();
-
-for(let counter = 0; counter < data.length; counter++){
-    diseasesData = [...diseasesData, data[counter].disease];
+async function fetchData() {
+    try {
+        const response = await fetch("http://localhost:3000/disease");
+        return response.json();
+    } catch (error) {
+        // Handle any errors
+        console.error(error);
+        throw error;
+    }
 }
 
-export default diseasesData;
+async function loadData() {
+    try {
+        const diseaseValues = [];
+        const response = await fetchData();
+        const data = response;
+        for (let counter = 0; counter < data.length; counter++) {
+            diseaseValues.push(data[counter].disease);
+        }
+        return diseaseValues;
+    } catch (error) {
+        // Handle any errors
+        console.error(error);
+        throw error;
+    }
+}

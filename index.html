@@ -1,58 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
 
     <script src="node_modules\jquery\dist\jquery.min.js"></script>
 
     <!-- Add Materialize CSS and JS -->
-    <link rel="stylesheet"
-          href="node_modules\materialize-css\dist\css\materialize.min.css" />
+    <link
+      rel="stylesheet"
+      href="node_modules\materialize-css\dist\css\materialize.min.css"
+    />
 
     <!-- Material ICONS -->
-    <link rel="stylesheet"
-          href="../node_modules/material-icons/css/material-icons.min.css" />
-    <script src="node_modules\materialize-css\dist\js\materialize.min.js">
-    </script>
+    <link
+      rel="stylesheet"
+      href="node_modules/material-icons/css/material-icons.min.css"
+    />
+    <script src="node_modules\materialize-css\dist\js\materialize.min.js"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var modals = document.querySelectorAll('.modal');
-            M.Modal.init(modals);
+      document.addEventListener("DOMContentLoaded", function () {
+        var modals = document.querySelectorAll(".modal");
+        M.Modal.init(modals);
+      });
+
+      //Activate floating action button
+      document.addEventListener("DOMContentLoaded", function () {
+        var elems = document.querySelectorAll(".fixed-action-btn");
+        var instances = M.FloatingActionButton.init(elems, {
+          direction: "left",
         });
+      });
 
-
-        $(function(){
-            $(".tricky").on({
-                mouseover:function(){
-                    $(this).css({
-                        left:(Math.random()*90)+"%",
-                        top:(Math.random()*90)+"%",
-                    });
-                }
-            });
-            $(".btn-wrap").hover(function() {
-                $(this).toggleClass('active');
-            });
-        });
-
-        $('.tricky').bind('touchstart', function(){
+      $(function () {
+        $(".tricky").on({
+          mouseover: function () {
             $(this).css({
-                left:(Math.random()*90)+"%",
-                top:(Math.random()*90)+"%"
+              left: Math.random() * 90 + "%",
+              top: Math.random() * 90 + "%",
             });
-        })
+          },
+        });
+        $(".btn-wrap").hover(function () {
+          $(this).toggleClass("active");
+        });
+      });
 
+      $(".tricky").bind("touchstart", function () {
+        $(this).css({
+          left: Math.random() * 90 + "%",
+          top: Math.random() * 90 + "%",
+        });
+      });
     </script>
 
     <script src="./src/assets/script.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>sanCode</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
-</body>
+  </body>
 </html>

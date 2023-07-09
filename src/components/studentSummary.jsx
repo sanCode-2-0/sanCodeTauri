@@ -45,13 +45,11 @@ const SummaryTable = () => {
             <th>Adm. no</th>
             <th>First Name</th>
             <th>Second Name</th>
-            <th>Third Name</th>
-            <th>Fourth Name</th>
             <th>Class</th>
             <th>Temperature Reading</th>
-            <th>complain</th>
-            <th>ailment</th>
-            <th>medication</th>
+            <th>Complain</th>
+            <th>Ailment</th>
+            <th>Medication</th>
             <th>Last time here</th>
           </tr>
         </thead>
@@ -75,14 +73,16 @@ const SummaryTable = () => {
 
             return (
               <tr key={newRecordWithFormattedTimeStamp.recordID}>
-                {keysForRecordWithFormattedTimeStamp.map((eachKey) => (
-                  <td
-                    style={{ overflow: "hidden", textOverflow: "ellipsis" }}
-                    key={eachKey}
-                  >
-                    {newRecordWithFormattedTimeStamp[eachKey]}
-                  </td>
-                ))}
+                <td>{newRecordWithFormattedTimeStamp.recordID || " "}</td>
+                <td>{newRecordWithFormattedTimeStamp.admNo || " "}</td>
+                <td>{newRecordWithFormattedTimeStamp.fName || " "}</td>
+                <td>{newRecordWithFormattedTimeStamp.sName || " "}</td>
+                <td>{newRecordWithFormattedTimeStamp.class || " "}</td>
+                <td>{newRecordWithFormattedTimeStamp.tempReading || 0}</td>
+                <td>{newRecordWithFormattedTimeStamp.complain || 0}</td>
+                <td>{newRecordWithFormattedTimeStamp.ailment || 0}</td>
+                <td>{newRecordWithFormattedTimeStamp.medication || 0}</td>
+                <td>{newRecordWithFormattedTimeStamp.timestamp || 0}</td>
               </tr>
             );
           })}

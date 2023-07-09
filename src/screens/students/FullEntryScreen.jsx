@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import "../screens.css";
 
 //REACT-ICONS
-import { IoArrowBackCircleSharp, IoPersonAddSharp } from "react-icons/io5";
 import { IoCloseCircle } from "react-icons/io5";
 import { IoReturnDownBackOutline } from "react-icons/io5";
 
@@ -20,8 +19,33 @@ import { Alert } from "@mui/material";
 //React-widget dropdown
 import "react-widgets/styles.css";
 import DropdownList from "react-widgets/DropdownList";
-// import { diseasesData } from "../../assets/diseasesData";
-const diseaseValues = ["fever", "diarrhea", "tb"];
+import GoBackButton from "../../components/goBackButton";
+async function fetchData() {
+  try {
+    const response = await fetch("http://localhost:3000/disease");
+    return response.json();
+  } catch (error) {
+    // Handle any errors
+    console.error(error);
+    throw error;
+  }
+}
+
+async function loadData() {
+  try {
+    const diseaseValues = [];
+    const response = await fetchData();
+    const data = response;
+    for (let counter = 0; counter < data.length; counter++) {
+      diseaseValues.push(data[counter].disease);
+    }
+    return diseaseValues;
+  } catch (error) {
+    // Handle any errors
+    console.error(error);
+    throw error;
+  }
+}
 
 const FullEntryScreen = () => {
   const [tempReading, setTempReading] = useState(0.0);
@@ -101,13 +125,13 @@ const FullEntryScreen = () => {
     const inputValue = event.target.value;
     setFilter(inputValue);
     setShowDropdown(inputValue !== "");
-    setAilment(selectedValue);
   };
 
   const handleDropdownSelect = (value) => {
     setSelectedValue(value);
     setFilter(value);
     setShowDropdown(false);
+    setAilment(value);
   };
 
   const filteredValues = diseaseValues
@@ -218,10 +242,6 @@ const FullEntryScreen = () => {
     }
   };
 
-  const redirectToEnterAdmissionScreen = () => {
-    window.location.href = "/enter-admission-number-screen?reload=true";
-  };
-
   //Block concerned with the
   return (
     <>
@@ -230,15 +250,7 @@ const FullEntryScreen = () => {
           <div className="col l12 section main">
             <div className="card full-entry-padding">
               <div className="card-content">
-                <i className={"right"}>
-                  <button
-                    className={"btn light-blue darken-1"}
-                    onClick={redirectToEnterAdmissionScreen}
-                  >
-                    <IoArrowBackCircleSharp size={"34"} color={"#fff"} />
-                  </button>
-                  <hr />
-                </i>
+                <GoBackButton destination={"/enter-admission-number-screen"} />
                 <i className="right">
                   <button className="activator btn">Add New Record</button>
                 </i>

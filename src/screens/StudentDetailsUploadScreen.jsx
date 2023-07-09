@@ -1,6 +1,6 @@
 import { useState } from "react";
 import readXlsxFile from "read-excel-file";
-
+import GoBackButton from "../components/goBackButton";
 export default function App() {
   const [excelInfo, setExcelInfo] = useState([]);
   const [admNos, setAdmNos] = useState([]);
@@ -72,6 +72,7 @@ export default function App() {
   return (
     <div className="container center-align">
       <h2>Upload an Excel file with student details:</h2>
+      <GoBackButton destination={"/"} />
       <p>
         The Excel file must adhere to the following column order:
         <strong>First Name, Second Name, Adm No., Class</strong>.
